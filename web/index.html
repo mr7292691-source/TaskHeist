@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>TaskHeist · Heist Room</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="TaskHeist home"
+          ><span class="brand-mark">T/H</span> TASKHEIST</a
+        >
+        <div class="room-label">
+          <span class="live-dot"></span> HEIST ROOM
+          <span class="local">LOCAL</span>
+        </div>
+        <div class="section-label">
+          MISSION ARCHIVE
+          <button id="refresh" aria-label="Refresh runs">↻</button>
+        </div>
+        <nav id="runs" aria-label="Earlier runs"></nav>
+        <p class="sidebar-foot">
+          One mission. Three agents.<br />Every move checked.<br /><span
+            >Local evidence. No invented progress.</span
+          >
+        </p>
+      </aside>
+      <main>
+        <header class="topline">
+          <span>OPERATIONS / <strong>HEIST ROOM</strong></span
+          ><span id="connection" role="status">Connecting…</span>
+        </header>
+        <div id="empty">
+          <p class="eyebrow">AWAITING A MISSION</p>
+          <h1>Your next heist starts here.</h1>
+          <p>
+            Start a task from the CLI or MCP client. This room follows persisted
+            work as it happens.
+          </p>
+          <code>node dist/cli.js demo</code>
+        </div>
+        <section id="mission" hidden>
+          <div class="mission-heading">
+            <div>
+              <p class="eyebrow" id="run-id"></p>
+              <h1 id="title"></h1>
+              <div class="badges">
+                <span id="status" class="badge"></span
+                ><span id="mock" class="badge mock" hidden
+                  >SCRIPTED MOCK · NOT MODEL PERFORMANCE</span
+                >
+              </div>
+            </div>
+            <button id="cancel" class="danger">Cancel run</button>
+          </div>
+          <div class="metrics">
+            <div><span>ROUND</span><strong id="round">—</strong></div>
+            <div><span>ELAPSED</span><strong id="elapsed">—</strong></div>
+            <div><span>TOKENS</span><strong id="tokens">—</strong></div>
+            <div><span>COST · USD</span><strong id="cost">Unknown</strong></div>
+            <div class="revision">
+              <span>CONTENT REVISION</span
+              ><strong id="revision">Not recorded</strong>
+            </div>
+          </div>
+          <div id="agents" class="agents"></div>
+          <div id="outcome" role="status" hidden></div>
+          <div class="workspace">
+            <section class="panel conversation">
+              <div class="panel-heading">
+                <div>
+                  <span class="eyebrow">MISSION COMMS</span>
+                  <h2>Activity & handoffs</h2>
+                </div>
+                <span id="event-count"></span>
+              </div>
+              <div class="replay-controls">
+                <button id="play">Replay</button
+                ><label for="cursor">Event</label
+                ><input
+                  id="cursor"
+                  type="range"
+                  min="1"
+                  max="1"
+                  value="1"
+                /><output id="position">1 / 1</output
+                ><button id="latest">Latest</button>
+              </div>
+              <p class="timeline-note">
+                Recorded actions and evidence-linked summaries. No private
+                reasoning.
+              </p>
+              <div
+                id="timeline"
+                tabindex="0"
+                aria-label="Mission activity timeline"
+              ></div>
+            </section>
+            <section class="panel evidence-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="eyebrow">THE PAPER TRAIL</span>
+                  <h2>Evidence locker</h2>
+                </div>
+                <a id="report" class="button" download>Report ↓</a>
+              </div>
+              <div class="tabs" role="group" aria-label="Evidence type">
+                <button data-tab="findings" aria-pressed="true">Findings</button
+                ><button data-tab="patches" aria-pressed="false">Diffs</button
+                ><button data-tab="evidence" aria-pressed="false">Tests</button>
+              </div>
+              <div id="evidence"></div>
+              <p class="evidence-foot">
+                Evidence belongs to the recorded revision.<br />A passing check
+                supports only what it tests.
+              </p>
+            </section>
+          </div>
+        </section>
+        <p id="error" role="alert"></p>
+      </main>
+    </div>
+  </body>
+</html>
