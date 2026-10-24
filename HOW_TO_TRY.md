@@ -18,7 +18,7 @@ docker pull node:22-alpine
 
 Use Node.js 22.18+ or another supported LTS release, Git, and Docker running with **Linux containers**. `docker --version` only checks the client; `docker info` confirms the engine is running. The demo container uses the preloaded `node:22-alpine` image and does not download packages during a run.
 
-If Docker is unavailable, you can still open the dashboard and inspect earlier runs. A new demo will stop at **needs attention** with an explanation. TaskHeist will not run generated code or tests on your host as a fallback.
+If Docker is unavailable, the explicit offline demo still completes using a deterministic fixture inspection. It labels its evidence **SIMULATED DEMO EVIDENCE** and never executes generated code or tests on your host. Real task runs continue to require Docker.
 
 ## 2. Open the Heist Room
 
@@ -40,7 +40,7 @@ cd D:\Software\TaskHeist
 npm run demo
 ```
 
-The command prints a JSON line containing `runId`, then the final report. Copy the ID. The dashboard should show a new mission with a prominent **SCRIPTED MOCK** badge. The agent decisions in this demo are scripted; the checks run in Docker when Docker is available.
+The command prints a JSON line containing `runId`, then the final report. Copy the ID. The dashboard should show a new mission with a prominent **SCRIPTED MOCK** badge. The agent decisions are scripted. With Docker available, the demo check runs in the restricted container. Without Docker, the demo uses a deterministic fixture inspection and labels the evidence as simulated.
 
 Follow the timeline:
 

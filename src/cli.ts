@@ -7,6 +7,7 @@ import { Service } from "./service.js";
 import { startMcp } from "./mcp.js";
 import { createDemo, demoCheck } from "./demo.js";
 import { startDashboard } from "./dashboard.js";
+import { DemoExecutor } from "./executor.js";
 async function main() {
   const [cmd, ...args] = process.argv.slice(2);
   const store = new Store(resolve(process.env.TASKHEIST_HOME ?? ".taskheist"));
@@ -45,11 +46,13 @@ async function main() {
         provider: args.includes("--real") ? "openai" : "mock",
       };
     }
-    const started = await service.start(input);
+    const demoService =
+      cmd === "demo" ? new Service(store, new DemoExecutor()) : service;
+    const started = await demoService.start(input);
     console.log(JSON.stringify(started));
     let count = 0;
     const timer = setInterval(() => {
-      void service
+      void demoService
         .status(started.runId)
         .then((s) => {
           for (const e of s.events.slice(count))
@@ -58,9 +61,9 @@ async function main() {
         })
         .catch(() => {});
     }, 500);
-    const run = await service.wait(started.runId);
+    const run = await demoService.wait(started.runId);
     clearInterval(timer);
-    console.log(await service.report(run.id, "markdown"));
+    console.log(await demoService.report(run.id, "markdown"));
     if (run.state !== "completed") process.exitCode = 2;
     return;
   }

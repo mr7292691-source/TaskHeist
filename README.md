@@ -42,7 +42,7 @@ The demo creates a clean, deliberately faulty TypeScript fixture under `.taskhei
 
 The fixture models synchronous, in-memory behavior only. Restart persistence, distributed processing, transactions, retries after partial failure, and database concurrency are outside its acceptance criteria. See `fixtures/webhook` for the faulty source, corrected source, and regression test. The mock provider is specifically for this fixture, not a general coding model.
 
-Without Docker, the demo exits **2** with an honest unresolved report. A skipped container integration test does not demonstrate that the real demo passed.
+Without Docker, the explicit demo completes with **SIMULATED DEMO EVIDENCE** after inspecting the known fixture as data. It does not execute repository code on the host. Real task runs still stop at `needs_attention` when Docker is unavailable. A simulated demo does not demonstrate container execution.
 
 ## CLI
 
